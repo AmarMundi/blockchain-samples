@@ -128,7 +128,7 @@ var log = NewContractLogger(DEFAULTNICKNAME, DEFAULTLOGGINGLEVEL)
 // start the message pumps
 // ************************************
 func main() {
-	err := shim.Start(new(SimpleChaincode))
+	err := shim.Start(new(*SimpleChaincode))
 	if err != nil {
 		log.Infof("ERROR starting Simple Chaincode: %s", err)
 	}
