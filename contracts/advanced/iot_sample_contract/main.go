@@ -135,7 +135,7 @@ func main() {
 }
 
 // Init is called in deploy mode when contract is initialized
-func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Init(stub *shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	var stateArg ContractState
 	var err error
 
@@ -170,7 +170,7 @@ func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args [
 }
 
 // Invoke is called in invoke mode to delegate state changing function messages
-func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	if function == "createAsset" {
 		return t.createAsset(stub, args)
 	} else if function == "updateAsset" {
@@ -192,7 +192,7 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 }
 
 // Query is called in query mode to delegate non-state-changing queries
-func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Query(stub *shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	if function == "readAsset" {
 		return t.readAsset(stub, args)
 	} else if function == "readAllAssets" {
@@ -224,7 +224,7 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 // ************************************
 // createAsset
 // ************************************
-func (t *SimpleChaincode) createAsset(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) createAsset(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assetID string
 	var argsMap ArgsMap
 	var event interface{}
@@ -374,7 +374,7 @@ func (t *SimpleChaincode) createAsset(stub *shim.ChaincodeStub, args []string) (
 // ************************************
 // updateAsset
 // ************************************
-func (t *SimpleChaincode) updateAsset(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) updateAsset(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assetID string
 	var argsMap ArgsMap
 	var event interface{}
@@ -567,7 +567,7 @@ func (t *SimpleChaincode) updateAsset(stub *shim.ChaincodeStub, args []string) (
 // ************************************
 // deleteAsset
 // ************************************
-func (t *SimpleChaincode) deleteAsset(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) deleteAsset(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assetID string
 	var argsMap ArgsMap
 	var event interface{}
@@ -642,7 +642,7 @@ func (t *SimpleChaincode) deleteAsset(stub *shim.ChaincodeStub, args []string) (
 // ************************************
 // deletePropertiesFromAsset
 // ************************************
-func (t *SimpleChaincode) deletePropertiesFromAsset(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) deletePropertiesFromAsset(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assetID string
 	var argsMap ArgsMap
 	var event interface{}
@@ -862,7 +862,7 @@ OUTERDELETELOOP:
 // ************************************
 // deleteAllAssets
 // ************************************
-func (t *SimpleChaincode) deleteAllAssets(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) deleteAllAssets(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	iter, err := stub.RangeQueryState("IOT", "IOT}")
 	if err != nil {
 		err = fmt.Errorf("deleteAllAssets failed to get a range query iterator: %s", err)
@@ -900,7 +900,7 @@ func (t *SimpleChaincode) deleteAllAssets(stub *shim.ChaincodeStub, args []strin
 // ************************************
 // readAsset
 // ************************************
-func (t *SimpleChaincode) readAsset(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readAsset(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assetID string
 	var argsMap ArgsMap
 	var request interface{}
@@ -961,7 +961,7 @@ func (t *SimpleChaincode) readAsset(stub *shim.ChaincodeStub, args []string) ([]
 // ************************************
 // readAllAssets
 // ************************************
-func (t *SimpleChaincode) readAllAssets(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readAllAssets(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assets ByAssetID
 	var err error
 	var state interface{}
@@ -1017,7 +1017,7 @@ func (t *SimpleChaincode) readAllAssets(stub *shim.ChaincodeStub, args []string)
 // ************************************
 // readAssetHistory
 // ************************************
-func (t *SimpleChaincode) readAssetHistory(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readAssetHistory(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var assetBytes []byte
 	var assetID string
 	var argsMap ArgsMap
@@ -1108,7 +1108,7 @@ func (t *SimpleChaincode) readAssetHistory(stub *shim.ChaincodeStub, args []stri
 //***************************************************
 //***************************************************
 
-func (t *SimpleChaincode) readContractState(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readContractState(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 
 	if len(args) != 0 {
@@ -1137,21 +1137,21 @@ func (t *SimpleChaincode) readContractState(stub *shim.ChaincodeStub, args []str
 // ************************************
 // readAssetSamples
 // ************************************
-func (t *SimpleChaincode) readAssetSamples(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readAssetSamples(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	return []byte(samples), nil
 }
 
 // ************************************
 // readAssetSchemas
 // ************************************
-func (t *SimpleChaincode) readAssetSchemas(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readAssetSchemas(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	return []byte(schemas), nil
 }
 
 // ************************************
 // readContractObjectModel
 // ************************************
-func (t *SimpleChaincode) readContractObjectModel(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) readContractObjectModel(stub *shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var state = ContractState{MYVERSION, DEFAULTNICKNAME}
 
 	stateJSON, err := json.Marshal(state)
@@ -1166,7 +1166,7 @@ func (t *SimpleChaincode) readContractObjectModel(stub *shim.ChaincodeStub, args
 // ************************************
 // setLoggingLevel
 // ************************************
-func (t *SimpleChaincode) setLoggingLevel(stub *shim.ChaincodeStub, args []string) error {
+func (t *SimpleChaincode) setLoggingLevel(stub *shim.ChaincodeStubInterface, args []string) error {
 	type LogLevelArg struct {
 		Level string `json:"logLevel"`
 	}
@@ -1203,7 +1203,7 @@ type CreateOnUpdate struct {
 // ************************************
 // setCreateOnUpdate
 // ************************************
-func (t *SimpleChaincode) setCreateOnUpdate(stub *shim.ChaincodeStub, args []string) error {
+func (t *SimpleChaincode) setCreateOnUpdate(stub *shim.ChaincodeStubInterface, args []string) error {
 	var createOnUpdate CreateOnUpdate
 	var err error
 	if len(args) != 1 {
@@ -1227,7 +1227,7 @@ func (t *SimpleChaincode) setCreateOnUpdate(stub *shim.ChaincodeStub, args []str
 }
 
 // PUTcreateOnUpdate marshals the new setting and writes it to the ledger
-func PUTcreateOnUpdate(stub *shim.ChaincodeStub, createOnUpdate CreateOnUpdate) (err error) {
+func PUTcreateOnUpdate(stub *shim.ChaincodeStubInterface, createOnUpdate CreateOnUpdate) (err error) {
 	createOnUpdateBytes, err := json.Marshal(createOnUpdate)
 	if err != nil {
 		err = errors.New("PUTcreateOnUpdate failed to marshal")
@@ -1244,7 +1244,7 @@ func PUTcreateOnUpdate(stub *shim.ChaincodeStub, createOnUpdate CreateOnUpdate) 
 }
 
 // canCreateOnUpdate retrieves the setting from the ledger and returns it to the calling function
-func canCreateOnUpdate(stub *shim.ChaincodeStub) bool {
+func canCreateOnUpdate(stub *shim.ChaincodeStubInterface) bool {
 	var createOnUpdate CreateOnUpdate
 	createOnUpdateBytes, err := stub.GetState("CreateOnUpdate")
 	if err != nil {
