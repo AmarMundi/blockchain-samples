@@ -56,7 +56,7 @@ type AssetIDT struct {
 const MaxRecentStates int = 20
 
 // GETRecentStatesFromLedger returns the unmarshaled recent states
-func GETRecentStatesFromLedger(stub *shim.ChaincodeStub) (RecentStates, error) {
+func GETRecentStatesFromLedger(stub shim.ChaincodeStubInterface) (RecentStates, error) {
     var state = RecentStates{make([]string, 0, MaxRecentStates)}
     var err error
 	recentStatesBytes, err := stub.GetState(RECENTSTATESKEY)
@@ -75,7 +75,7 @@ func GETRecentStatesFromLedger(stub *shim.ChaincodeStub) (RecentStates, error) {
 }
 
 // PUTRecentStatesToLedger marshals and writes the recent states
-func PUTRecentStatesToLedger(stub *shim.ChaincodeStub, state RecentStates) (error) {
+func PUTRecentStatesToLedger(stub shim.ChaincodeStubInterface, state RecentStates) (error) {
     var recentStatesJSON []byte
     var err error
     recentStatesJSON, err = json.Marshal(state.RecentStates)
@@ -92,13 +92,13 @@ func PUTRecentStatesToLedger(stub *shim.ChaincodeStub, state RecentStates) (erro
     return nil 
 }
 
-func clearRecentStates(stub *shim.ChaincodeStub) (error) {
+func clearRecentStates(stub shim.ChaincodeStubInterface) (error) {
     var rstates RecentStates
     rstates.RecentStates = make([]string, 0, MaxRecentStates)
     return PUTRecentStatesToLedger(stub, rstates)
 }
 
-func pushRecentState (stub *shim.ChaincodeStub, state string) (error) {
+func pushRecentState (stub shim.ChaincodeStubInterface, state string) (error) {
     var rstate RecentStates
     var err error
     var assetID string
@@ -134,7 +134,7 @@ func pushRecentState (stub *shim.ChaincodeStub, state string) (error) {
 }
 
 // typically called when an asset is deleted
-func removeAssetFromRecentState (stub *shim.ChaincodeStub, assetID string) (error) {
+func removeAssetFromRecentState (stub shim.ChaincodeStubInterface, assetID string) (error) {
     var rstate RecentStates
     var err error
     rstate, err = GETRecentStatesFromLedger(stub)
@@ -195,7 +195,7 @@ func findAssetInRecent (assetID string, rstate RecentStates) (int, error) {
     return -1, nil
 }
 
-func readRecentStates(stub *shim.ChaincodeStub) ([]byte, error) {
+func readRecentStates(stub shim.ChaincodeStubInterface) ([]byte, error) {
 	var err error
     var rstate RecentStates
     var rstateOut = make([]interface{}, 0, MaxRecentStates) 
