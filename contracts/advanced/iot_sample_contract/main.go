@@ -129,10 +129,13 @@ var log = NewContractLogger(DEFAULTNICKNAME, DEFAULTLOGGINGLEVEL)
 // ************************************
 
 func main() {
-    err := shim.Start(new(SimpleChaincode))
+    err := shim.Start(new(SampleChaincode))
     if err != nil {
-        fmt.Printf("Error starting Simple chaincode: %s", err)
+        fmt.Println("Could not start SampleChaincode")
+    } else {
+        fmt.Println("SampleChaincode successfully started")
     }
+ 
 }
 
 // Init is called in deploy mode when contract is initialized
