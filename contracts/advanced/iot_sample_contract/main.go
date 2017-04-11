@@ -128,6 +128,13 @@ var log = NewContractLogger(DEFAULTNICKNAME, DEFAULTLOGGINGLEVEL)
 // start the message pumps
 // ************************************
 
+func main() {
+    err := shim.Start(new(SimpleChaincode))
+    if err != nil {
+        fmt.Printf("Error starting Simple chaincode: %s", err)
+    }
+}
+
 // Init is called in deploy mode when contract is initialized
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	var stateArg ContractState
