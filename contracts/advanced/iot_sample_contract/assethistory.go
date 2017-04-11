@@ -33,7 +33,7 @@ type AssetStateHistory struct {
 }
 
 // Create a new history entry in the ledger for an asset.,\
-func createStateHistory(stub *shim.ChaincodeStub, assetID string, stateJSON string) error {
+func createStateHistory(stub *shim.ChaincodeStubInterface, assetID string, stateJSON string) error {
 
 	var ledgerKey = assetID + STATEHISTORYKEY
 	var assetStateHistory = AssetStateHistory{make([]string, 1)}
@@ -51,7 +51,7 @@ func createStateHistory(stub *shim.ChaincodeStub, assetID string, stateJSON stri
 }
 
 // Update the ledger with new state history for an asset. States are stored in the ledger in descending order by timestamp.
-func updateStateHistory(stub *shim.ChaincodeStub, assetID string, stateJSON string) error {
+func updateStateHistory(stub *shim.ChaincodeStubInterface, assetID string, stateJSON string) error {
 
 	var ledgerKey = assetID + STATEHISTORYKEY
 	var historyBytes []byte
@@ -84,7 +84,7 @@ func updateStateHistory(stub *shim.ChaincodeStub, assetID string, stateJSON stri
 }
 
 // Delete an state history from the ledger.
-func deleteStateHistory(stub *shim.ChaincodeStub, assetID string) error {
+func deleteStateHistory(stub *shim.ChaincodeStubInterface, assetID string) error {
 
 	var ledgerKey = assetID + STATEHISTORYKEY
 	return stub.DelState(ledgerKey)
@@ -92,7 +92,7 @@ func deleteStateHistory(stub *shim.ChaincodeStub, assetID string) error {
 }
 
 // Get the state history for an asset.
-func readStateHistory(stub *shim.ChaincodeStub, assetID string) (AssetStateHistory, error) {
+func readStateHistory(stub *shim.ChaincodeStubInterface, assetID string) (AssetStateHistory, error) {
 
 	var ledgerKey = assetID + STATEHISTORYKEY
 	var assetStateHistory AssetStateHistory
