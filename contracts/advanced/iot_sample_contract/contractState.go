@@ -50,7 +50,7 @@ type ContractState struct {
 }
 
 // GETContractStateFromLedger retrieves state from ledger and returns to caller
-func GETContractStateFromLedger(stub *shim.ChaincodeStub) (ContractState, error) {
+func GETContractStateFromLedger(stub *shim.ChaincodeStubInterface) (ContractState, error) {
 	var state = ContractState{MYVERSION, DEFAULTNICKNAME}
 	var err error
 	contractStateBytes, err := stub.GetState(CONTRACTSTATEKEY)
@@ -76,7 +76,7 @@ func GETContractStateFromLedger(stub *shim.ChaincodeStub) (ContractState, error)
 }
 
 // PUTContractStateToLedger writes a contract state into the ledger
-func PUTContractStateToLedger(stub *shim.ChaincodeStub, state ContractState) error {
+func PUTContractStateToLedger(stub *shim.ChaincodeStubInterface, state ContractState) error {
 	var contractStateJSON []byte
 	var err error
 	contractStateJSON, err = json.Marshal(state)
@@ -95,7 +95,7 @@ func PUTContractStateToLedger(stub *shim.ChaincodeStub, state ContractState) err
 	return nil
 }
 
-func initializeContractState(stub *shim.ChaincodeStub, version string, nickname string) error {
+func initializeContractState(stub *shim.ChaincodeStubInterface, version string, nickname string) error {
 	var state ContractState
 	var err error
 	if version != MYVERSION {
@@ -117,7 +117,7 @@ func initializeContractState(stub *shim.ChaincodeStub, version string, nickname 
 	return PUTContractStateToLedger(stub, state)
 }
 
-func getLedgerContractVersion(stub *shim.ChaincodeStub) (string, error) {
+func getLedgerContractVersion(stub *shim.ChaincodeStubInterface) (string, error) {
 	var state ContractState
 	var err error
 	state, err = GETContractStateFromLedger(stub)
@@ -127,7 +127,7 @@ func getLedgerContractVersion(stub *shim.ChaincodeStub) (string, error) {
 	return state.Version, nil
 }
 
-func assetIsActive(stub *shim.ChaincodeStub, assetID string) bool {
+func assetIsActive(stub *shim.ChaincodeStubInterface, assetID string) bool {
 	// no logging because it is used to determine presence or absence without
 	// context
 	stateBytes, err := stub.GetState(assetID)
