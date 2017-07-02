@@ -9,7 +9,6 @@ import (
     "github.com/op/go-logging"
     "github.com/hyperledger/fabric/core/chaincode/shim"
     "github.com/hyperledger/fabric/core/util"
-    common "github.com/hyperledger/fabric/examples/chaincode/go/PoD/Common" 
 
 )
 
