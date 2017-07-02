@@ -6,8 +6,7 @@ import (
     "strings"
     "reflect"
  //  "github.com/mcuadros/go-jsonschema-generator"
-"github.com/hyperledger/fabric/core/chaincode/shim"
-common "github.com/hyperledger/fabric/examples/chaincode/go/PoD/Common" 
+"github.com/hyperledger/fabric/core/chaincode/shim" 
 )
 // This contract is meant for complianace management
 // Originally designed to track compliance for shipping contract's container data
