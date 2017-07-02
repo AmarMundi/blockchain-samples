@@ -7,8 +7,6 @@ import (
     "reflect"
  //  "github.com/mcuadros/go-jsonschema-generator"
 "github.com/hyperledger/fabric/core/chaincode/shim"
-"github.com/hyperledger/fabric/common/util"
-pb "github.com/hyperledger/fabric/protos/peer"
 	
 )
 // This contract is meant for complianace management
