@@ -8,8 +8,7 @@ import (
    // "reflect"
  //  "github.com/mcuadros/go-jsonschema-generator"
 "github.com/hyperledger/fabric/core/chaincode/shim"
- "github.com/hyperledger/fabric/core/util"
- common "github.com/hyperledger/fabric/examples/chaincode/go/PoD/Common" 
+ "github.com/hyperledger/fabric/core/util" 
 )
 
 
